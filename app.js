@@ -7,7 +7,6 @@ const localStrategy = require("passport-local");
 const methodOverride = require("method-override")
 const passportLocalMongoose = require("passport-local-mongoose");
 const flash = require("connect-flash");
-const seedDB = require("./seeds");
 const Campground = require("./models/campground");
 const Comment = require("./models/comment");
 const User = require("./models/user");
