@@ -1,0 +1,37 @@
+<% include ../partials/header %>
+
+
+<div class="container">
+    <header class="jumbotron">
+        <div class="container">
+            <p>Your submited camps</p>
+            <p>
+                <a class="btn btn-primary btn-large" href="/campgrounds/new">Add more campgrounds</a>
+            </p>
+        </div>
+    </header>
+    <div class="row text-center" style="display:flex; flex-wrap:wrap">
+        <% camps.forEach(function(el) { %>
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                    <img src=<%= el.image %>>
+                    <div class="caption">
+                        <h4> <%= el.name %>  </h4>
+                    </div>
+                    <p>
+                        <a href="/campgrounds/<%= el.id %>" class="btn btn-primary">Details</a>
+                        <a href="/campgrounds/<%= el._id %>/edit" class="btn btn-warning">Edit</a>
+                    <form class="delete-form" action="/campgrounds/<%= el._id %>/?_method=DELETE" method="POST">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                    </p>
+                </div>
+            </div> 
+        <% }) %> 
+    </div>
+  
+    
+</div>
+
+
+<% include ../partials/footer %>
