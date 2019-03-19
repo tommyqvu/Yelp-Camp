@@ -63,6 +63,10 @@ app.get("/mycamps", function (req, res) {
 
     });
 });
-app.listen(process.env.PORT, function () {
-    console.log("started");
+
+const port = process.env.PORT || 3000;
+const ip = process.env.IP || "localhost";
+
+app.listen(port,function(){
+    console.log("Server has started .... at port "+ port+" ip: "+ip);
 });
