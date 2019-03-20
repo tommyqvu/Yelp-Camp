@@ -20,7 +20,7 @@ const authRoutes = require("./routes/index");
     useNewUrlParser: true
 }); */
 
-mongoose.connect(`mongodb+srv://tommy:anzDgne:LT9yU.Q@cluster0-asjlb.mongodb.net/test?retryWrites=true
+mongoose.connect(`mongodb+srv://tommy:tommy1998@cluster0-asjlb.mongodb.net/test?retryWrites=true
 `);
 
 app.use(bodyParser.urlencoded({
