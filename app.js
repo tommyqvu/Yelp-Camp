@@ -15,21 +15,9 @@ const commentRoutes = require("./routes/comments");
 const campgroundsRoutes = require("./routes/campgrounds");
 const authRoutes = require("./routes/index");
 
-// Local
-/*mongoose.connect("mongodb://localhost:27017/yelp_camp", {
-    useNewUrlParser: true
-}); */
-
-/*
-// Heroku
-mongoose.connect(`mongodb+srv://tommy:tommy1998@cluster0-asjlb.mongodb.net/test?retryWrites=true
-`);
-*/
-
 mongoose.connect(process.env.DATABASEURL);
 
 console.log(process.env.DATABASEURL)
-
 
 app.use(bodyParser.urlencoded({
     extended: true
