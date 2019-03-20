@@ -78,6 +78,6 @@ app.get("/mycamps", function (req, res) {
 const port = process.env.PORT || 3000;
 const ip = process.env.IP || "localhost";
 
-app.listen(8080,function(){
+app.listen(process.env.PORT ,function(){
     console.log("Server has started");
 });
