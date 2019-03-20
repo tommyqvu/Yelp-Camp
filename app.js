@@ -75,9 +75,9 @@ app.get("/mycamps", function (req, res) {
     });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const ip = process.env.IP || "localhost";
 
-app.listen(process.env.PORT ,function(){
+app.listen(port ,function(){
     console.log("Server has started");
 });
