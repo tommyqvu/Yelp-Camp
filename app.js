@@ -16,9 +16,13 @@ const campgroundsRoutes = require("./routes/campgrounds");
 const authRoutes = require("./routes/index");
 
 
-mongoose.connect("mongodb://localhost:27017/yelp_camp", {
+/*mongoose.connect("mongodb://localhost:27017/yelp_camp", {
     useNewUrlParser: true
-});
+}); */
+
+mongoose.connect(`mongodb+srv://tommy:anzDgne:LT9yU.Q@cluster0-asjlb.mongodb.net/test?retryWrites=true
+`);
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
