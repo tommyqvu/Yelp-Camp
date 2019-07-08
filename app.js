@@ -1,36 +1,45 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const bodyParser = require("body-parser");
-const mongoose = require("mongoose");
-const passport = require("passport");
-const localStrategy = require("passport-local");
-const methodOverride = require("method-override")
-const passportLocalMongoose = require("passport-local-mongoose");
-const flash = require("connect-flash");
-const Campground = require("./models/campground");
-const Comment = require("./models/comment");
-const User = require("./models/user");
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const passport = require('passport');
+const localStrategy = require('passport-local');
+const methodOverride = require('method-override');
+const passportLocalMongoose = require('passport-local-mongoose');
+const flash = require('connect-flash');
+const Campground = require('./models/campground');
+const Comment = require('./models/comment');
+const User = require('./models/user');
 
-const commentRoutes = require("./routes/comments");
-const campgroundsRoutes = require("./routes/campgrounds");
-const authRoutes = require("./routes/index");
+const commentRoutes = require('./routes/comments');
+const campgroundsRoutes = require('./routes/campgrounds');
+const authRoutes = require('./routes/index');
+const seed = require("./seeds")
 
-mongoose.connect(process.env.DATABASEURL);
+mongoose.connect(
+  process.env.DATABASEURL || 'mongodb://localhost:27017/yelpcamp',
+  {
+    useNewUrlParser: true,
+  },
+);
 
-console.log(process.env.DATABASEURL)
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
-app.use(methodOverride("_method"));
-app.use(flash())
-app.use(require("express-session")({
-    secret: "666",
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
+seed()
+app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
+app.use(methodOverride('_method'));
+app.use(flash());
+app.use(
+  require('express-session')({
+    secret: '666',
     resave: false,
-    saveUninitialized: false
-}));
+    saveUninitialized: false,
+  }),
+);
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -41,31 +50,34 @@ passport.serializeUser(User.serializeUser());
 //The first argument of deserializeUser corresponds to the key of the user object that was given to the done function
 passport.deserializeUser(User.deserializeUser());
 // Passes currentUser and message to all templates
-app.use(function (req, res, next) {
-    res.locals.currentUser = req.user;
-    res.locals.error = req.flash("error");
-    res.locals.success = req.flash("success");
-    next();
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  res.locals.error = req.flash('error');
+  res.locals.success = req.flash('success');
+  next();
 });
 
-app.use("/campgrounds/:id/comments", commentRoutes);
-app.use("/campgrounds", campgroundsRoutes);
+app.use('/campgrounds/:id/comments', commentRoutes);
+app.use('/campgrounds', campgroundsRoutes);
 app.use(authRoutes);
 
-
-
-
 //Show uploads by user
-app.get("/mycamps", function (req, res) {
-    Campground.find({"author.id": req.user._id}, function(err, camps){
-        res.render("campground/mycamps", {camps: camps});
-
-    });
+app.get('/mycamps', function(req, res) {
+  Campground.find(
+    {
+      'author.id': req.user._id,
+    },
+    function(err, camps) {
+      res.render('campground/mycamps', {
+        camps: camps,
+      });
+    },
+  );
 });
 
 const port = process.env.PORT || 8080;
-const ip = process.env.IP || "localhost";
+const ip = process.env.IP || 'localhost';
 
-app.listen(port ,function(){
-    console.log("Server has started");
+app.listen(port, function() {
+  console.log('Server has started');
 });
